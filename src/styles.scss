@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~font-awesome/css/font-awesome.min.css';
+//@import '~sweetalert/dist/sweetalert.min.js';
+
+
+
+.BtnAdd{
+
+  border-radius: 50%;
+
+}
+
+.obligatoire{
+  position:absolute;
+  left: -0.5em;
+  color:red;
+  font-weight: bold;
+
+}
+#btnAlignement{
+  position:absolute;
+  right: 150px;
+}
+
+#btnSearch{
+  position:absolute;
+  top: 90px;
+  right: 130px;
+}
+#tableUser{
+  position:absolute;
+  top: 160px;
+  left: 110px;
+
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

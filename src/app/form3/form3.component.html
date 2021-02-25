@@ -1,0 +1,360 @@
+
+
+
+
+
+<ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{getstatus()}} un utilisateur</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+  <div class="modal-body">
+
+    <div class="card m-3">
+
+      <div class="card-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+
+              <div class="form-row">
+
+
+
+                  <div class="form-group col-6">
+
+                    <span class="obligatoire">*</span><label> Nom</label>
+                    <input type="text" formControlName="lastName" class="form-control"
+
+                    [ngClass]="{'is-invalid': (registerForm.get('lastName')?.touched || registerForm.get('lastName')?.dirty || vall)  && registerForm.get('lastName')?.errors }" />
+
+                    <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+                        <div *ngIf="registerForm.get('lastName')?.errors?.required">Ce champ est obligatoire</div>
+                    </div>
+                    <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+                      <div *ngIf="registerForm.get('lastName')?.errors?.pattern">Le nom est invalide</div>
+                    </div>
+                    <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+                      <div *ngIf="registerForm.get('lastName')?.errors?.minlength">Le nom doit etre supérieur à deux Caractéres</div>
+                    </div>
+
+
+
+                </div>
+
+                  <div class="form-group col-6">
+
+
+
+                       <span class="obligatoire">*</span><label>Prenom:</label>
+                    <input type="text" formControlName="firstName" class="form-control"
+
+                    [ngClass]="{ 'is-invalid':(registerForm.get('firstName')?.touched || registerForm.get('firstName')?.dirty || vall)  && registerForm.get('firstName')?.errors }" />
+
+                    <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+                        <div *ngIf="registerForm.get('firstName')?.errors?.required">Ce champ est obligatoire</div>
+                    </div>
+                    <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+                      <div *ngIf="registerForm.get('firstName')?.errors?.pattern">Le prenom est invalide</div>
+                  </div>
+
+                  <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('firstName')?.errors?.minlenght">Le prenom doit etre supérieur à deux Caractéres</div>
+                </div>
+
+
+
+                </div>
+              </div>
+
+
+              <div class="form-row">
+                <div class="form-group col-6">
+
+
+                  <span class="obligatoire">*</span><label>Email</label>
+                    <input type="text" formControlName="email" class="form-control"
+
+                    [ngClass]="{ 'is-invalid': (registerForm.get('email')?.touched || registerForm.get('email')?.dirty || vall) && registerForm.get('email')?.errors }" />
+
+                    <div *ngIf="vall && registerForm.get('email')?.errors" class="invalid-feedback">
+                        <div *ngIf="registerForm.get('email')?.errors?.required">Ce champ est obligatoire</div>
+                    </div>
+                    <span *ngIf="registerForm.get('email')?.errors?.pattern" class="invalid-feedback">
+                      L'E-mail n'est pas valide
+                </span>
+            </div>
+
+
+                  <div class="form-group col-6">
+
+
+                     <span class="obligatoire">*</span><label>Telephone</label>
+
+
+
+                     <input type="text" formControlName="telephone" class="form-control"
+                     [ngClass]="{ 'is-invalid':(registerForm.get('telephone')?.touched || registerForm.get('telephone')?.dirty || vall)  &&
+                     registerForm.get('telephone')?.errors }"
+                     ng2TelInput
+                     [ng2TelInputOptions]="{initialCountry: 'sn'}"
+                     (hasError)="hasError($event)"
+                     (ng2TelOutput)="getNumber($event)"
+                     (intlTelInputObject)="telInputObject($event)"
+                     (countryChange)="onCountryChange($event)" />
+
+
+
+                     <div *ngIf="registerForm.get('telephone')?.errors?.required" class="invalid-feedback">
+                       Ce champ est obligatoire
+                      </div>
+
+                     <div  *ngIf="registerForm.get('telephone')?.errors?.pattern" class="invalid-feedback">
+                      le numero nest pas valide
+                    </div>
+                    <div *ngIf="vall && registerForm.get('telephone')?.errors" class="invalid-feedback">
+                      <div *ngIf="registerForm.get('telephone')?.errors?.minlength">Le nombre de chiffre  doit etre égal à 9</div>
+                    </div>
+
+              </div>
+            </div>
+
+
+              <div class="form-row">
+                  <div class="form-group col-6">
+
+                     <span class="obligatoire">*</span><label>Adresse</label>
+                     <input type="text" formControlName="adresse" class="form-control"
+
+                     [ngClass]="{ 'is-invalid': (registerForm.get('adresse')?.touched || registerForm.get('adresse')?.dirty || vall)
+                     && registerForm.get('adresse')?.errors }" />
+
+                         <div *ngIf=" registerForm.get('adresse')?.errors?.required" class="invalid-feedback">
+                           Ce champ est obligatoire
+                          </div>
+                          <div *ngIf="registerForm.get('adresse')?.errors?.minlength" class="invalid-feedback">
+                           Le nombre de Caractéres doit etre superieur à 2.
+                           </div>
+
+
+
+
+              </div>
+
+                <div class="form-group col-6">
+
+
+
+                             <span class="obligatoire">*</span><label>Date de naissance</label>
+
+                              <div class="input-group">
+
+                                <input type="text"
+
+                                placeholder="Datepicker"
+                                class="form-control" formControlName="dateNai"
+                                bsDatepicker [bsConfig]="bsdateconfigonfig" #dp="bsDatepicker">
+
+                                <div class="input-group-btn">
+                                  <button class="btn btn-info"
+                                          (click)="dp.show()"
+                                          [attr.aria-expanded]="dp.isOpen"
+                                          type="button">
+                                          <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                  </button>
+                                </div>
+
+
+
+
+
+
+                              </div>
+                            </div>
+
+            </div>
+
+
+
+
+
+          <div class="container">
+
+
+                <div class="row ml-4">
+
+
+
+                              <div class="col-ms-6 ml-5">
+
+                                    <button class="btn btn-danger" type="reset">Annuler</button>
+                              </div>
+
+
+                            <div class="col-ms-6 ml-4">
+                                      <button  class="btn btn-primary ml-3" >{{getstatus()}}</button>
+
+                            </div>
+
+              </div>
+
+
+          </div>
+          </form>
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+
+
+  </div>
+</ng-template>
+<!--modal-->
+<hr>
+
+
+
+
+
+
+
+<div class="container">
+  <div class="row" id="btnAlignement">
+
+
+
+    <div class="col-ms-3  ">
+    <button class="btn btn-success" title="Telecharger en excel" (click)="exportExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+
+    </div>
+
+
+    <div class="col-ms-3 ml-2">
+     <button class="btn btn-danger" title="Telecharger en Pdf" (click)="exportPdf()" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
+<!--(click)="exportExcel()-->
+   </div>
+   <div class="col-ms-3 ml-5">
+  <div class="BtnAdd">
+      <button class="btn btn-outline-primary" title="Ajouter un utilisateur" (click)="open(content); statusValue=false; isUpdate=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+
+  </div>
+
+
+   </div>
+
+  </div>
+
+</div>
+
+   <div class="container">
+          <div class="row">
+            <div class="col-ms-3" id="titlePage">
+              <h2>Liste des utilisateurs</h2>
+
+            </div>
+            <div class="col-ms-3" id="btnSearch">
+                <span class="input-group-text" ><i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" class="form-control"
+                id="search" placeholder="Recherche" [(ngModel)]="searchValue"
+                >
+              </span>
+              </div>
+
+
+          </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- https://www.tutorialspoint.com/ngx_bootstrap/ngx_bootstrap_datepicker.htm -->
+
+
+
+
+
+  <div class="container" id="tableUser">
+  <div class="jumbtron">
+<table class="table table-striped"  id="excel-table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID </th>
+      <th scope="col">Nom </th>
+      <th scope="col">Prenom</th>
+      <th scope="col">Email</th>
+      <th scope="col">Adresse</th>
+      <th scope="col">Telephone</th>
+      <th scope="col">Date de naissance</th>
+
+      <th scope="col" colspan="2">ACTIONS</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor= "let u of listUser | searchfilter:searchValue; let i=index" [class.selected]="setCurrentUser=== u" >
+
+      <td scope="col">{{i}}</td>
+      <td scope="col">{{u.lastName}}</td>
+      <td scope="col">{{u.firstName}}</td>
+      <td scope="col">{{u.email}}</td>
+      <td scope="col">{{u.adresse}}</td>
+      <td scope="col">{{u.telephone}}</td>
+      <td scope="col">{{u.dateNai }}</td>
+
+
+
+    <td colspan="3">
+      <button class="btn btn-danger" (click)="onDelete(u)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+
+      <button class="btn btn-success ml-3"  (click)="open(content) ; statusValue=true; isUpdate=true; editData(u,i)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+      <button class="btn btn-info ml-3"   (click)="OnSelect(u);open1(content1) "><i class="fa fa-eye" aria-hidden="true"></i></button>
+
+    </td>
+
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+</div>
+
+
+
+
+
+<!-- https://www.munonye.com/formatting-date-and-time-and-angular-javascript-typescript-localdatetime-ngbdate-datepicker/ -->
+<!-- http://preview.themeforest.net/item/fuse-angularjs-material-design-admin-template/full_screen_preview/12931855?_ga=2.108912898.1400996638.1612968194-386112706.1612968194&_gac=1.254836090.1612968194.Cj0KCQiApY6BBhCsARIsAOI_GjbBfj3EcFo7eMitVmCIVFMThmz9rHqOTGAijQfP9kS_5RVXprCW9uAaArrZEALw_wcB -->
+<!-- http://angular-material.fusetheme.com/apps/dashboards/analytics -->
+
+
+
+
+
+
+<ng-template #content1 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <app-view  [data]="this.selectUser"></app-view>
+
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button> -->
+  </div>
+</ng-template>
+
+
